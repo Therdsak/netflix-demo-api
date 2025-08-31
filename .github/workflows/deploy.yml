@@ -27,7 +27,7 @@ jobs:
       - name: Check coverage threshold (>= 5%)
         id: check
         run: |
-          COVERAGE=$(jq '.total.lines.pct' coverage/unit/coverage-summary.json)
+          COVERAGE=$(jq '.total.lines.pct' src/coverage/unit/coverage-summary.json)
           echo "Line coverage is $COVERAGE%"
           if (( $(echo "$COVERAGE >= 5" | bc -l) )); then
             echo "✅ Coverage passed"
