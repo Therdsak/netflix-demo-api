@@ -12,7 +12,7 @@ dotenv.config();
 @Injectable()
 export class MovieRepositoryImpl implements MovieRepository {
   private readonly url =
-    'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&sort_by=popularity.desc';
+    'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc';
   private readonly options = {
     method: 'GET',
     headers: {
@@ -21,18 +21,15 @@ export class MovieRepositoryImpl implements MovieRepository {
     },
   };
 
-  async getPopularMovies(page: number): Promise<Movie[]> {
-    const response = await fetch(`${this.url}&page=${page}`, this.options);
+  async getPopularMovies(page: number, language: string): Promise<Movie[]> {
+    const response = await fetch(
+      `${this.url}&page=${page}&language=${language}`,
+      this.options,
+    );
     if (!response.ok) {
       throw new Error('Failed to fetch movies from TMDB');
     }
     const data = await response.json();
-    return data.results.map((item: any) => ({
-      id: item.id,
-      title: item.title,
-      overview: item.overview,
-      popularity: item.popularity,
-      release_date: item.release_date,
-    }));
+    return data.results;
   }
 }

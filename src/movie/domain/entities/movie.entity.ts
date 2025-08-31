@@ -13,6 +13,21 @@ export class Movie {
   })
   overview: string;
 
+  @ApiProperty({
+    example: '2010-07-16',
+    description: 'Background image of the movie',
+  })
+  backdrop_path: string;
+
+  @ApiProperty({
+    example: '2010-07-16',
+    description: 'Poster image of the movie',
+  })
+  poster_path: string;
+
+  @ApiProperty({ example: 4.3, description: 'Vote Average of the movie' })
+  vote_average: number;
+
   @ApiProperty({ example: 85.7, description: 'Popularity score of the movie' })
   popularity: number;
 
@@ -21,4 +36,17 @@ export class Movie {
     description: 'Release date of the movie',
   })
   release_date: string;
+
+  @ApiProperty({
+    example: '2010',
+    description: 'Release year of the movie',
+  })
+  release_year: string;
+
+  @ApiProperty({
+    example: false,
+    description:
+      'This is an 18+ rated movie or content intended for adults only.',
+  })
+  adult: boolean;
 }
