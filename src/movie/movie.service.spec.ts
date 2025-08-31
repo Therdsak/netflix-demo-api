@@ -1,32 +1,47 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/unbound-method */
+
 import { MovieService } from './movie.service';
-import { Movie } from './domain/entities/movie.entity';
+import { GetMoviesUseCase } from './domain/usecases/get-movies.usecase';
 
 describe('MovieService', () => {
-  it('should get popular movies from usecase', async () => {
-    const mockMovies: Movie[] = [
-      {
-        id: 1,
-        title: 'Matrix',
-        overview: '...',
-        popularity: 95,
-        release_date: '1999-03-31',
-        backdrop_path: '',
-        poster_path: '',
-        vote_average: 0,
-        release_year: '',
-        adult: false,
-      },
-    ];
+  let movieService: MovieService;
+  let mockUseCase: jest.Mocked<GetMoviesUseCase>;
 
-    const mockUseCase = {
+  const mockMovies = [
+    {
+      id: 1,
+      title: 'Inception',
+      overview: '...',
+      release_date: '2010-07-16',
+      release_year: '2010',
+      popularity: 80,
+      vote_average: 7.5,
+      poster_path: 'some-url',
+      backdrop_path: 'some-url',
+      adult: false,
+    },
+  ];
+
+  beforeEach(() => {
+    mockUseCase = {
       execute: jest.fn().mockResolvedValue(mockMovies),
-    };
+    } as unknown as jest.Mocked<GetMoviesUseCase>;
 
-    const service = new MovieService(mockUseCase as any);
-    const result = await service.getPopularMovies(1, 'en');
+    movieService = new MovieService(mockUseCase);
+  });
+
+  it('should return popular movies from use case', async () => {
+    const result = await movieService.getPopularMovies(1, 'en');
 
     expect(result).toEqual(mockMovies);
-    expect(mockUseCase.execute).toHaveBeenCalledWith(1);
+    expect(mockUseCase.execute).toHaveBeenCalledWith(1, 'en');
+  });
+
+  it('should throw if use case throws', async () => {
+    mockUseCase.execute.mockRejectedValueOnce(new Error('Failed to fetch'));
+
+    await expect(movieService.getPopularMovies(1, 'en')).rejects.toThrow(
+      'Failed to fetch',
+    );
   });
 });
