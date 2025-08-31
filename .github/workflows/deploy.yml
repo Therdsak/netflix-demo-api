@@ -1,4 +1,4 @@
-name: CI - Unit & E2E Tests
+name: CI/CD with SonarQube Local
 
 on:
   push:
@@ -6,11 +6,12 @@ on:
   pull_request:
 
 jobs:
-  unit-test:
+  test-unit:
     runs-on: ubuntu-latest
+    outputs:
+      coverage_passed: ${{ steps.check.outputs.pass }}
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -20,28 +21,36 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint
-        run: npm run lint
+      - name: Run Unit Tests with Coverage
+        run: npm run test:cov:unit
 
-      - name: Run Unit Tests
-        run: npm run test
+      - name: Check coverage threshold (>= 80%)
+        id: check
+        run: |
+          COVERAGE=$(grep -o '"lines":{[^}]*}' coverage/unit/coverage-summary.json | grep -o '"pct":[0-9]*' | grep -o '[0-9]*')
+          echo "Line coverage is $COVERAGE%"
+          if [ "$COVERAGE" -ge 80 ]; then
+            echo "✅ Coverage passed"
+            echo "pass=true" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Coverage below threshold"
+            echo "pass=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
 
-  e2e-test:
+  test-e2e:
+    needs: test-unit
+    if: needs.test-unit.outputs.coverage_passed == 'true'
     runs-on: ubuntu-latest
     env:
       TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
-
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Install dependencies
-        run: npm ci
+      - run: npm ci
+      - run: npm run test:e2e
 
-      - name: Run E2E Tests
-        run: npm run test:e2e
+ 

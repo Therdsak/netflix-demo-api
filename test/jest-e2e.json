@@ -6,6 +6,6 @@
     "^.+\\.(t|j)s$": "ts-jest"
   },
   "testEnvironment": "node",
-  "testTimeout": 30000,
-  "setupFiles": ["dotenv/config"]
+  "collectCoverage": true,
+  "coverageDirectory": "./coverage/e2e"
 }
