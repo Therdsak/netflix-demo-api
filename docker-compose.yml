@@ -1,33 +1,18 @@
-version: '3.7'
+version: '3.8'
+
 services:
-  sonarqube:
-    image: sonarqube:community # Use the Community Edition image
+  app:
+    container_name: netflix-demo-api
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - 9000:9000
-    volumes:
-      - sonarqube_data:/opt/sonarqube/data
+      - '3000:3000'
     environment:
-      - SONAR_JDBC_URL=jdbc:postgresql://postgresql:5432/sonarqube # Connect to PostgreSQL container
-      - SONAR_JDBC_USERNAME=sonarqube
-      - SONAR_JDBC_PASSWORD=sonarqube
+      - NODE_ENV=production
+      - TMDB_API_KEY=${TMDB_API_KEY}
     networks:
-      - sonarqube-network
+      - app-network
 
-  postgresql: # PostgreSQL database service
-    image: postgres
-    environment:
-      - POSTGRES_USER=sonarqube
-      - POSTGRES_PASSWORD=sonarqube
-    volumes:
-      - postgresql_data:/var/lib/postgresql/data
-    networks:
-      - sonarqube-network
-
-volumes:
-  sonarqube_data:
-  postgresql_data:
-
-# add network name sonarqube-network
 networks:
-  sonarqube-network:
-    external: true
+  app-network:
