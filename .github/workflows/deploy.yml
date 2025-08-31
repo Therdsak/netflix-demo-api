@@ -78,8 +78,14 @@ jobs:
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
         with:
-          projectKey: Therdsak_netflix-demo-api
-          organization: therdsak  # แก้เป็นชื่อ org จริงใน SonarCloud
+          args: >
+            -Dsonar.projectKey=Therdsak_netflix-demo-api
+            -Dsonar.organization=therdsak
+            -Dsonar.sources=src
+            -Dsonar.tests=test
+            -Dsonar.test.inclusions=**/*.spec.ts
+            -Dsonar.javascript.lcov.reportPaths=src/coverage/unit/lcov.info
+            -Dsonar.coverage.exclusions=**/*.spec.ts
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_SONARCLOUD }}
 
@@ -104,4 +110,4 @@ jobs:
           echo "TMDB_API_KEY=${{ secrets.TMDB_API_KEY }}" >> .env
 
       - name: Run Docker Compose
-        run: docker-compose --env-file .env up --build -d
+        run: docker compose --env-file .env up --build -d
