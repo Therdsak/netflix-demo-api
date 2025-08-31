@@ -89,25 +89,4 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_SONARCLOUD }}
 
-  docker-build:
-    name: Build & Run Docker Compose
-    needs: sonar-scan
-    if: success()
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build Docker image
-        run: docker build -t netflix-demo-api:latest .
-
-      - name: Create .env file
-        run: |
-          echo "TMDB_API_KEY=${{ secrets.TMDB_API_KEY }}" >> .env
-
-      - name: Run Docker Compose
-        run: docker compose --env-file .env up --build -d
+  
