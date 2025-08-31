@@ -53,4 +53,32 @@ jobs:
       - run: npm ci
       - run: npm run test:e2e
 
- 
+  sonar-scan:
+    needs: test-e2e
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project (if needed)
+        run: npm run build
+
+      - name: Generate unit test coverage (lcov)
+        run: npm run test:cov:unit
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2
+        with:
+          projectKey: Therdsak_netflix-demo-api
+          organization: therdsak  # แก้เป็นชื่อ org จริงใน SonarCloud
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_SONARCLOUD }}
