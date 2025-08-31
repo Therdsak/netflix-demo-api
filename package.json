@@ -20,7 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "test:e2e:cov": "jest --config ./jest-e2e.json --coverage",
     "test:cov:unit": "jest --coverage --coverageDirectory=coverage/unit",
-    "test:cov:e2e": "jest --config ./jest-e2e.json --coverage --coverageDirectory=coverage/e2e",
+    "test:cov:e2e": "jest --config ./test/jest-e2e.json --coverage --coverageDirectory=coverage/e2e",
     "coverage:merge": "npx istanbul-merge coverage/unit/coverage-final.json coverage/e2e/coverage-final.json > coverage/coverage-final.json && npx nyc report --reporter=lcov --report-dir=coverage"
   },
   "dependencies": {
