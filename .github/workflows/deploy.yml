@@ -116,7 +116,11 @@ jobs:
           username: ${{ secrets.DO_DROPLET_USER }}
           key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
           script: |
-            cd ~/netflix-demo-api
+            echo "Deploy: Checking user and directory"
+            whoami
+            pwd
+            ls -la /home/root/netflix-demo-api || echo "Directory not found!"
+            cd /home/root/netflix-demo-api
             docker pull gftherd24/netflix-demo-api:latest
-            docker-compose down
+            docker-compose down || echo "docker-compose down failed"
             docker-compose up -d
