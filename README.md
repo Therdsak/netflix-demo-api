@@ -1,98 +1,282 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Netflix Demo Project 📽️
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+รวมทั้ง **Frontend (Next.js)** และ **Backend (NestJS API)** สำหรับระบบ Netflix Demo
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## Frontend
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+# Nexflix Demo Frontend 🎬
 
-## Project setup
+โปรเจกต์นี้เป็น **Frontend Web App** ที่สร้างด้วย [Next.js](https://nextjs.org/) (เวอร์ชัน 15.x) โดยโครงสร้างและ dependencies ถูกออกแบบมาเพื่อรองรับ **State Management, i18n, UI Styling, Data Fetching** และการพัฒนาแบบโมดูลาร์
 
-```bash
-$ npm install
+---
+
+## 📂 โครงสร้างโปรเจกต์
+
+```
+nexflix-demo-frontend/
+│
+├── public/                # Static files (favicon, images, etc.)
+│
+├── src/
+│   ├── app/               # Next.js App Router (layout.tsx, page.tsx, not-found.tsx)
+│   ├── data/              # Data access layer
+│   │   ├── adapters/      # Adapter แปลงข้อมูล
+│   │   ├── datasources/   # แหล่งข้อมูล เช่น API / local storage
+│   │   └── repositories/  # Repository pattern เชื่อม usecases กับ datasource
+│   ├── domain/            # Business logic (models, usecases)
+│   ├── presentation/      # Layer ที่เกี่ยวกับ UI
+│   │   ├── components/    # UI Components
+│   │   ├── context/       # React Context Providers
+│   │   ├── hooks/         # Custom hooks
+│   │   ├── providers/     # Provider wrappers
+│   │   └── store/         # Zustand store สำหรับ state management
+│   ├── i18n/              # Internationalization config (next-i18next, locales)
+│   ├── utils/             # ฟังก์ชัน helper ต่าง ๆ
+│   └── middleware.ts      # Next.js Middleware
+│
+├── .env                   # Environment variables
+├── next.config.ts         # Next.js configuration
+├── tailwind.config.ts     # Tailwind CSS configuration
+├── tsconfig.json          # TypeScript configuration
+├── package.json           # Scripts และ Dependencies
+└── README.md              # เอกสารโปรเจกต์
 ```
 
-## Compile and run the project
+---
+
+## 🛠 เทคโนโลยีที่ใช้
+
+- **Framework**
+  - [Next.js 15](https://nextjs.org/) – React Framework (App Router, Server/Client Components)
+  - [React 19](https://react.dev/) – UI Library
+
+- **UI & Styling**
+  - [Tailwind CSS v4](https://tailwindcss.com/) – Utility-first CSS framework
+  - [Framer Motion](https://www.framer.com/motion/) – Animation library
+  - [Geist](https://vercel.com/font) – Font จาก Vercel
+
+- **State Management**
+  - [Zustand](https://zustand-demo.pmnd.rs/) – Lightweight state management
+
+- **Data Fetching**
+  - [TanStack React Query](https://tanstack.com/query/latest) – Server state management + caching
+
+- **Internationalization (i18n)**
+  - [i18next](https://www.i18next.com/) + [next-i18next](https://github.com/i18next/next-i18next) – รองรับหลายภาษา
+  - [react-i18next](https://react.i18next.com/) – integration กับ React
+
+- **Linting & Type Checking**
+  - [ESLint](https://eslint.org/) – Linting
+  - [TypeScript](https://www.typescriptlang.org/) – Type safety
+
+---
+
+## 🚀 วิธีการรัน
+
+### 1. ติดตั้ง dependencies
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
+# หรือ
+yarn install
+# หรือ
+pnpm install
 ```
 
-## Run tests
+### 2. รัน development server
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run dev
 ```
 
-## Deployment
+แล้วเปิด [http://localhost:3000](http://localhost:3000) ใน browser
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 3. Build โปรเจกต์สำหรับ production
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm run build
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 4. รัน production server
 
-## Resources
+```bash
+npm run start
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+### 5. ตรวจสอบ lint
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```bash
+npm run lint
+```
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 📦 Scripts ที่ใช้บ่อย (จาก `package.json`)
 
-## Stay in touch
+- `dev` → `next dev --turbopack`
+- `build` → `next build --turbopack`
+- `start` → `next start`
+- `lint` → `eslint`
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+---
 
-## License
+## ✨ Features
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- **Authentication Flow (รองรับการเข้าสู่ระบบ/ออกจากระบบ)**  
+  ใช้ร่วมกับ Next.js Middleware และ State Management (Zustand)
+
+- **Internationalization (i18n)**  
+  ใช้ `next-i18next`, `i18next`, `react-i18next` รองรับหลายภาษา
+
+- **Responsive UI & Styling**  
+  ใช้ `Tailwind CSS v4` และ `Framer Motion` เพื่อทำ UI ที่สวยงามและมี Animation
+
+- **State Management แบบเบา**  
+  ใช้ [Zustand](https://zustand-demo.pmnd.rs/) จัดการ Global State แบบ minimal
+
+- **Data Fetching & Caching**  
+  ใช้ `TanStack React Query` สำหรับการจัดการ API calls และ caching
+
+- **Modular Architecture**  
+  แบ่งโครงสร้างออกเป็น Layer ชัดเจน
+  - `data` (repositories, datasources, adapters)
+  - `domain` (models, usecases)
+  - `presentation` (components, context, store, hooks, providers)
+
+- **Error Handling & Loading State**  
+  Integrate ผ่าน React Query + Zustand เพื่อจัดการ UX เวลาโหลด/เกิด error
+
+- **Scalable Project Structure**  
+  ออกแบบรองรับการขยาย feature ใหม่ ๆ ได้ง่าย เช่นเพิ่ม usecase, component, หรือภาษาที่รองรับ
+
+---
+
+## Backend
+
+# Netflix Demo API 🍿
+
+โปรเจกต์นี้เป็น **Backend API** ที่สร้างด้วย [NestJS](https://nestjs.com/) เพื่อทำหน้าที่เป็น **API Gateway สำหรับ Movie Data (เช่น TMDB API)** และเปิดใช้งาน Swagger UI สำหรับการทดสอบ API
+
+---
+
+## 📂 โครงสร้างโปรเจกต์
+
+```
+netflix-demo-api/
+│
+├── .github/workflows/        # GitHub Actions (CI/CD)
+├── dist/                     # Build output (auto-generated)
+├── node_modules/             # Dependencies
+│
+├── src/                      # Source code หลัก
+│   ├── movie/                # โมดูลเกี่ยวกับ Movie
+│   │   ├── data/             # Data Layer
+│   │   │   └── movie.repository.impl.ts   # Implement Repository
+│   │   ├── domain/           # Domain Layer (Business Logic)
+│   │   │   ├── entities/     # Entity (Movie)
+│   │   │   │   └── movie.entity.ts
+│   │   │   └── usecases/     # Usecases
+│   │   │       └── get-movies.usecase.ts
+│   │   ├── interfaces/       # Interfaces
+│   │   │   └── movie.repository.ts
+│   │   └── presentation/     # Presentation Layer (Controller, DTO)
+│   │       ├── dto/          # Data Transfer Object
+│   │       │   └── get-movies.dto.ts
+│   │       ├── movie.controller.ts
+│   │       ├── movie.module.ts
+│   │       └── movie.service.ts
+│   │
+│   ├── utils/                # Helper utilities
+│   ├── app.module.ts         # Root Module
+│   ├── app.service.ts        # Root Service
+│   ├── app.controller.ts     # Root Controller
+│   └── main.ts               # Entry point ของ NestJS
+│
+├── test/                     # Test files
+│   ├── app.e2e-spec.ts
+│   └── jest-e2e.json
+│
+├── docker-compose.yml        # Docker Compose สำหรับ container
+├── .env                      # Environment variables
+├── tsconfig.json             # TypeScript config
+├── package.json              # Scripts และ Dependencies
+└── README.md                 # เอกสารโปรเจกต์
+```
+
+---
+
+## 🚀 วิธีการรัน
+
+### 1. ติดตั้ง Dependencies
+
+```bash
+npm install
+```
+
+### 2. รัน Development Server
+
+```bash
+npm run start:dev
+```
+
+API จะเปิดที่:
+
+- **http://localhost:3000** → API Endpoint
+- **http://localhost:3000/api** → Swagger UI
+
+### 3. รัน Production Mode
+
+```bash
+npm run build
+npm run start:prod
+```
+
+### 4. รันทดสอบ
+
+```bash
+# Unit Test
+npm run test
+
+# e2e Test
+npm run test:e2e
+
+# Coverage
+npm run test:cov
+```
+
+### 5. รันด้วย Docker
+
+```bash
+docker-compose up --build
+```
+
+---
+
+## ✨ Features
+
+- **Movie Module**
+  - ดึงข้อมูลภาพยนตร์จาก TMDB API
+  - ใช้ **Repository Pattern** เชื่อม Usecase ↔ Data Source
+  - ใช้ **DTO (Data Transfer Object)** ในการ validate/request/response
+
+- **Domain Layer (Business Logic)**
+  - มี **Entities** และ **Usecases** แยกชัดเจน
+  - ตัวอย่าง Usecase: `get-movies.usecase.ts` สำหรับดึงรายการหนัง
+
+- **Swagger API Documentation**
+  - เปิด Swagger UI ที่ `/api`
+  - ง่ายต่อการทดสอบ API
+
+- **Architecture แบบ Clean**
+  - Layered Architecture:
+    - `data` → จัดการข้อมูล (เช่นเรียก API ภายนอก)
+    - `domain` → Logic และ Usecase
+    - `presentation` → Controller, DTO
+
+- **Testing**
+  - มีทั้ง **Unit Test** (`.spec.ts`) และ **e2e Test**
+
+- **Environment Configuration**
+  - ใช้ `.env` จัดเก็บ API Key หรือ Config ต่าง ๆ
