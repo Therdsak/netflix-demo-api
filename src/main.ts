@@ -7,6 +7,8 @@ async function bootstrap() {
   dotenv.config();
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors();
+
   const config = new DocumentBuilder()
     .setTitle('Movie API Gateway')
     .setDescription('API Gateway for TMDB Movie data')
