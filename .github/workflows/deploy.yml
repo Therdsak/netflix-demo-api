@@ -108,3 +108,15 @@ jobs:
           context: .
           push: true
           tags: gftherd24/netflix-demo-api:latest
+
+      - name: Deploy to DigitalOcean Droplet via SSH
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.DO_DROPLET_IP }}
+          username: ${{ secrets.DO_DROPLET_USER }}
+          key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/netflix-demo-api
+            docker pull gftherd24/netflix-demo-api:latest
+            docker-compose down
+            docker-compose up -d
