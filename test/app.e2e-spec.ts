@@ -7,7 +7,7 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-describe('Movie API (E2E)', () => {
+describe('Movie API (E2E) 1', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
